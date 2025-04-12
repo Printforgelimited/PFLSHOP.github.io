@@ -105,3 +105,28 @@ button#checkout-btn:hover {
 #cart-count {
   font-size: 1.2rem;
 }
+/* Pill-shaped buttons for the navigation links and product buttons */
+.nav-button, .add-to-cart-button, .buy-button {
+  background-color: #f56400; /* Orange background */
+  color: white;
+  padding: 0.6rem 2rem; /* Adjust padding for pill shape */
+  border-radius: 999px; /* Fully round edges for pill shape */
+  text-decoration: none;
+  font-weight: bold;
+  text-align: center;
+  display: inline-block;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+/* Hover effect for pill-shaped buttons */
+.nav-button:hover, .add-to-cart-button:hover, .buy-button:hover {
+  background-color: #d45500; /* Darker orange on hover */
+}
+
+/* Remove the default blue outline when focused */
+.nav-button:focus, .add-to-cart-button:focus, .buy-button:focus {
+  outline: none; /* Remove blue outline */
+  box-shadow: 0 0 5px #f56400; /* Optional: Add subtle glow effect on focus */
+}
