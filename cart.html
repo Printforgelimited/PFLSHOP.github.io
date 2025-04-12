@@ -1,32 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Your Cart</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #121212;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem;
+      background-color: #1f1f1f;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .cart-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: #1f1f1f;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem;
+      border-bottom: 1px solid #444;
+    }
+
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+
+    .cart-item h3 {
+      color: #fff;
+      margin: 0;
+    }
+
+    .cart-item p {
+      color: #ddd;
+      margin: 0;
+    }
+
+    .clear-cart-button {
+      margin-top: 1.5rem;
+      padding: 1rem 2rem;
+      background-color: #f56400;
+      color: white;
+      text-decoration: none;
+      border-radius: 999px;
+      font-weight: bold;
+      display: block;
+      width: 100%;
+      text-align: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .clear-cart-button:hover {
+      background-color: #d45500;
+    }
+  </style>
 </head>
 <body>
 
+  <!-- Header -->
   <header>
-    <h1>Your Shopping Cart</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="products.html">Products</a>
-      <a href="cart.html">Cart</a>
-    </nav>
+    <h1>Your Cart</h1>
   </header>
 
-  <main class="cart-container">
-    <div id="cart-items"></div>
-    <div id="total"></div>
-    <button id="checkout-btn">Proceed to Checkout</button>
-  </main>
+  <!-- Cart Container -->
+  <div class="cart-container">
+    <div id="cartItems">
+      <!-- Cart items will be dynamically added here -->
+    </div>
+    <a href="javascript:void(0);" class="clear-cart-button" onclick="clearCart()">Clear Cart</a>
+  </div>
 
-  <footer>
-    <p>&copy; 2025 PrintForgeLimited</p>
-  </footer>
+  <script>
+    // Function to retrieve cart items from localStorage
+    function getCartItems() {
+      let cart = localStorage.getItem('cart');
+      return cart ? JSON.parse(cart) : [];
+    }
 
-  <script src="cart.js"></script>
+    // Function to display cart items
+    function displayCartItems() {
+      const cartItems = getCartItems();
+      const cartItemsContainer = document.getElementById('cartItems');
+
+      if (cartItems.length === 0) {
+        cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+        return;
+      }
+
+      cartItemsContainer.innerHTML = '';
+      cartItems.forEach(item => {
+        const cartItemElement = document.createElement('div');
+        cartItemElement.classList.add('cart-item');
+        cartItemElement.innerHTML = `
+          <div>
+            <h3>${item.name}</h3>
+            <p>Price: $${item.price}</p>
+          </div>
+          <div>
+            <p>Quantity: ${item.quantity}</p>
+          </div>
+        `;
+        cartItemsContainer.appendChild(cartItemElement);
+      });
+    }
+
+    // Function to clear the cart
+    function clearCart() {
+      localStorage.removeItem('cart');
+      displayCartItems();
+    }
+
+    // Call displayCartItems when the page loads
+    window.onload = displayCartItems;
+  </script>
 </body>
 </html>
